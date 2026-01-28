@@ -1,0 +1,15 @@
+# virtual env
+.venv/
+
+# python junk
+__pycache__/
+*.pyc
+
+# model artifacts
+*.h5
+
+# editor
+.vscode/
+
+# OS
+.DS_Store
