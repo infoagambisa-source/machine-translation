@@ -15,7 +15,7 @@ latent_dim = 256
 # Choose a batch size
 # and a larger number of epochs:
 batch_size = 50
-epochs = 50x
+epochs = 50
 
 # Encoder training setup
 encoder_inputs = Input(shape=(None, num_encoder_tokens))
@@ -42,6 +42,7 @@ training_model.compile(optimizer='rmsprop', loss='categorical_crossentropy', met
 
 # print("Training the model:\n")
 # Train the model:
-training_model.fit([encoder_input_data, decoder_input_data], decoder_target_data, batch_size = batch_size, epochs = epochs, validation_split = 0.2)
+if __name__ == "__main__":
+    training_model.fit([encoder_input_data, decoder_input_data], decoder_target_data, batch_size = batch_size, epochs = epochs, validation_split = 0.2)
 
 training_model.save('training_model.h5')

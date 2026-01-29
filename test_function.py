@@ -24,10 +24,10 @@ decoder_model = Model([decoder_inputs] + decoder_states_inputs, [decoder_outputs
 
 def decode_sequence(test_input):
   # Encode the input as state vectors.
-  states_value = encoder_model.predict(test_input)
+  states_value = encoder_model.predict(test_input, verbose=0)
 
   # Generate empty target sequence of length 1.
-  target_seq = np.zeros((1, 1, num_decoder_tokens))
+  target_seq = np.zeros((1, 1, num_decoder_tokens), dtype="float32")
   # Populate the first token of target sequence with the start token.
   target_seq[0, 0, target_features_dict['<START>']] = 1.
 
@@ -43,7 +43,7 @@ def decode_sequence(test_input):
       [target_seq] + states_value)
 
     # Choose token with highest probability
-    sampled_token_index = np.argmax(output_tokens[0, -1, :])
+    sampled_token_index = int(np.argmax(output_tokens[0, -1, :]))
     sampled_token = reverse_target_features_dict[sampled_token_index]
     decoded_sentence += " " + sampled_token
 
@@ -53,7 +53,7 @@ def decode_sequence(test_input):
       stop_condition = True
 
     # Update the target sequence (of length 1).
-    target_seq = np.zeros((1, 1, num_decoder_tokens))
+    target_seq = np.zeros((1, 1, num_decoder_tokens), dtype="float32")
     target_seq[0, 0, sampled_token_index] = 1.
 
     # Update states
